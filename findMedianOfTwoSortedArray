@@ -1,0 +1,66 @@
+/**
+     * This method accepts two sorted arrays and returns the median of the two
+     * sorted arrays O(n+m).
+     * @param nums1 the first sorted array
+     * @param nums2 the second sorted array
+     * @return Median of the sorted array
+     */
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int [] mergedList = new int [nums1.length+nums2.length];
+        double median;
+        int i,j,count, IndexPos;
+        i = j = count = 0;
+
+        /*
+        The code below will be comparing each element of the two arrays with one another, placing the smallest
+        value in the new array called mergedList. i keeps track of the index position of num1 and j keeps
+        track of the index position of num2. This will be done until all elements of one
+        or both of the lists have been inserted into the merged list.
+         */
+        while (i < nums1.length && j < nums2.length) {
+            if (nums1[i] < nums2[j]) {
+                mergedList[count] = nums1[i];
+                i++;
+                count++;
+            } else {
+                mergedList[count] = nums2[j];
+                j++;
+                count++;
+            }
+        }
+
+        /*
+        Another check is done to see which array still has elements left to be inserted into
+        MergedList. Once determined, the remaining array will be looped through, inserting
+        remaining elements into mergedList.
+         */
+        if (i < nums1.length) {
+            for (int k = i; k < nums1.length; k++) {
+                mergedList[count] = nums1[k];
+                count++;
+            }
+        } else if (j < nums2.length) {
+            for (int k = j; k < nums2.length; k++) {
+                mergedList[count] = nums2[k];
+                count++;
+            }
+        } else {
+            // Do Nothing
+        }
+
+        /*
+        The calculation for median can be done now that both arrays have successfully merged. If the
+        new array has size that is even numbered, the index position of the first of the two middle numbers is
+        computed and stored in IndexPos. The variable is then used to access the two middle numbers in
+        the array and calculate the median using the formula below. Otherwise, if the size is odd numbered,
+        one value using IndexPos is stored in median.
+         */
+        IndexPos = (mergedList.length / 2) - 1;
+        if (mergedList.length % 2 == 0) {
+            median = (mergedList[IndexPos] + mergedList[IndexPos+1]) / 2.0;
+        } else {
+            IndexPos = Math.round(IndexPos);
+            median = mergedList[IndexPos];
+        }
+        return median;
+    }
