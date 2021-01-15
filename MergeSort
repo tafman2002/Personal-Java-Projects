@@ -1,0 +1,53 @@
+public static void Merge(int [] nums1, int [] nums2, int [] c) {
+          int i,j,count;
+          i = j = count = 0;
+          while (i < nums1.length && j < nums2.length) {
+              if (nums1[i] < nums2[j]) {
+                  c[count] = nums1[i];
+                  i++;
+                  count++;
+              } else {
+                  c[count] = nums2[j];
+                  j++;
+                  count++;
+              }
+          }
+
+          if (i < nums1.length) {
+              for (int k = i; k < nums1.length; k++) {
+                  c[count] = nums1[k];
+                  count++;
+              }
+          } else if (j < nums2.length) {
+              for (int k = j; k < nums2.length; k++) {
+                  c[count] = nums2[k];
+                  count++;
+              }
+          } else {
+              // Do Nothing
+          }
+      }
+
+    public static boolean MergeSort(int [] a) {
+        int n = a.length;
+        int j = 0;
+        boolean rc = true;
+        if (n < 2) {
+            return rc;
+        }
+        int mid = n/2;
+        int [] left = new int [mid];
+        int [] right =  new int[n-mid];
+        for (int i = 0; i < mid;i++) {
+            left[i] = a[i];
+        }
+        for(int i = mid; i < n;i++) {
+            right[j] = a[i];
+            j++;
+        }
+        MergeSort(left);
+        MergeSort(right);
+        Merge(left,right,a);
+        return rc;
+    }
+© 2021 GitHub, Inc.
